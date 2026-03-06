@@ -394,45 +394,6 @@ h1 {
     </div>
   </div>
 
-  <!-- MILESTONE 8 -->
-  <div class="timeline-item">
-    <div class="timeline-dot"></div>
-    <div class="timeline-card">
-      <div class="timeline-date">March 6, 2026</div>
-      <div class="timeline-title">Self-Publishing Decision</div>
-      <div class="timeline-description">
-        After reflection, Nicole decides on self-publishing through her imprint HELBIG. Faster to market, complete creative control, and the book speaks for itself. ISBNs pending from NLB.
-      </div>
-      <span class="timeline-status status-current">CURRENT</span>
-    </div>
-  </div>
-
-  <!-- MILESTONE 9 - UPCOMING -->
-  <div class="timeline-item">
-    <div class="timeline-dot"></div>
-    <div class="timeline-card">
-      <div class="timeline-date">Mid-April 2026</div>
-      <div class="timeline-title">Feedback from Editor Karin</div>
-      <div class="timeline-description">
-        Manuscript returns from editor Karin with final copy-editing notes. Cover design finalized. Final revisions completed.
-      </div>
-      <span class="timeline-status status-upcoming">UPCOMING</span>
-    </div>
-  </div>
-
-  <!-- MILESTONE 10 - UPCOMING -->
-  <div class="timeline-item">
-    <div class="timeline-dot"></div>
-    <div class="timeline-card">
-      <div class="timeline-date">May 2026</div>
-      <div class="timeline-title">Book Launch</div>
-      <div class="timeline-description">
-        <em>The Shame Paradox: Why We Fear Most the Emotion That Keeps Us Human</em> launches on KDP and IngramSpark. ISBN assigned. Available in print and digital formats worldwide.
-      </div>
-      <span class="timeline-status status-upcoming">UPCOMING</span>
-    </div>
-  </div>
-
 </div>
 
 <div class="cta-section">
