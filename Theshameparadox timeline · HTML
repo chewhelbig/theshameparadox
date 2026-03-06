@@ -3,239 +3,447 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nicole Chew-Helbig — Psychotherapist &amp; Author</title>
-<meta name="description" content="Nicole Chew-Helbig is a Gestalt psychotherapist, clinical researcher, and author based in Singapore. Her work explores consciousness, relationship, and what makes us irreplaceably human.">
+<title>The Shame Paradox — Book Timeline</title>
+<meta name="description" content="Follow the creation of The Shame Paradox: Why We Fear Most the Emotion That Keeps Us Human. A book by Nicole Chew-Helbig.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
 <style>
-.book-cover-frame {
-  position: relative;
-  overflow: hidden;
-  background: #f5f5f5;
-}
-
-.book-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.88);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(2px);
-}
-
-.overlay-text {
-  text-align: center;
-}
-
-.overlay-status {
-  font-family: 'Libre Franklin', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #8b5a5a;
+* {
   margin: 0;
-  letter-spacing: 0.05em;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.overlay-note {
+:root {
+  --cream: #faf8f5;
+  --taupe: #8b7b7b;
+  --rose: #d9a7a0;
+  --soft-pink: #f5e6e2;
+  --charcoal: #2a2a2a;
+  --accent: #a67c7c;
+}
+
+body {
   font-family: 'Libre Franklin', sans-serif;
+  background-color: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+  padding: 3rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(139, 123, 123, 0.15);
+  background: linear-gradient(135deg, rgba(245, 230, 226, 0.3) 0%, rgba(250, 248, 245, 1) 100%);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  color: var(--charcoal);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 1rem;
+  color: var(--taupe);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.tagline {
   font-size: 0.95rem;
-  color: #999;
-  margin: 0.4rem 0 0 0;
+  color: var(--accent);
+  font-style: italic;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+}
+
+/* TIMELINE CONTAINER */
+.timeline-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+/* CENTER LINE */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--rose), rgba(217, 167, 160, 0.2));
+  transform: translateX(-50%);
+}
+
+/* TIMELINE ITEMS */
+.timeline-item {
+  margin-bottom: 4rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+.timeline-item:nth-child(7) { animation-delay: 0.7s; }
+.timeline-item:nth-child(8) { animation-delay: 0.8s; }
+.timeline-item:nth-child(9) { animation-delay: 0.9s; }
+.timeline-item:nth-child(10) { animation-delay: 1s; }
+
+/* ALTERNATE LEFT AND RIGHT */
+.timeline-item:nth-child(odd) {
+  padding-right: calc(50% + 40px);
+}
+
+.timeline-item:nth-child(even) {
+  padding-left: calc(50% + 40px);
+}
+
+/* DOT */
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--rose);
+  border: 3px solid var(--cream);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 3px var(--rose);
+  z-index: 10;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  box-shadow: 0 0 0 3px var(--rose);
+}
+
+/* CARD */
+.timeline-card {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 2px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  border-left: 3px solid var(--rose);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.timeline-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-left-color: var(--accent);
+}
+
+.timeline-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--rose);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.timeline-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--charcoal);
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.timeline-description {
+  font-size: 0.95rem;
+  color: var(--taupe);
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+}
+
+.status-milestone {
+  background: rgba(217, 167, 160, 0.2);
+  color: var(--rose);
+}
+
+.status-current {
+  background: rgba(166, 124, 124, 0.2);
+  color: var(--accent);
+}
+
+.status-upcoming {
+  background: rgba(245, 230, 226, 0.5);
+  color: var(--taupe);
+}
+
+/* FOOTER NOTE */
+.timeline-note {
+  text-align: center;
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(139, 123, 123, 0.15);
+  color: var(--taupe);
+  font-size: 0.9rem;
   font-style: italic;
 }
 
-.btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
+/* CTA */
+.cta-section {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 3rem 2rem;
+  background: rgba(217, 167, 160, 0.08);
+  border-radius: 2px;
 }
 
-.btn.disabled:hover {
-  background-color: inherit;
-  color: inherit;
-  border-color: inherit;
+.cta-section h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--charcoal);
+  font-weight: 400;
 }
+
+.cta-section p {
+  color: var(--taupe);
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: 'Libre Franklin', sans-serif;
+}
+
+.btn:hover {
+  background: var(--taupe);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(166, 124, 124, 0.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .timeline-line {
+    left: 0;
+  }
+
+  .timeline-item {
+    padding-left: 50px !important;
+    padding-right: 0 !important;
+  }
+
+  .timeline-dot {
+    left: 0;
+  }
+
+  .timeline-card {
+    border-left: 3px solid var(--rose);
+  }
+}
+
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">Nicole Chew-Helbig</a>
-    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#books">Books</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#practice">Work with Nicole</a></li>
-      <li><a href="#writing">Writing &amp; Media</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+<header>
+  <h1>The Shame Paradox</h1>
+  <div class="subtitle">Why We Fear Most the Emotion That Keeps Us Human</div>
+  <p class="tagline">Follow the creation of Nicole Chew-Helbig's groundbreaking book</p>
+</header>
 
-<section id="home" class="hero">
-  <h1>Nicole Chew-Helbig</h1>
-  <p class="tagline">Psychotherapist and author exploring consciousness, relationship, and the lived texture of human experience.</p>
-  <div class="hero-buttons">
-    <a href="#books" class="btn btn-dark">Explore the Books</a>
-    <a href="#practice" class="btn btn-outline">Work with Nicole</a>
-  </div>
-</section>
+<div class="timeline-container">
+  <div class="timeline-line"></div>
 
-<div class="line"></div>
-
-<section id="books" class="books">
-  <div class="books-inner">
-    <h2 class="section-title">Books</h2>
-    <div class="books-grid">
-      <div class="book-card reveal">
-        <div class="book-cover-frame">
-          <img src="shame-paradox-cover.jpg" alt="The Shame Paradox — book cover by Nicole Chew-Helbig" />
-          <div class="book-overlay">
-            <div class="overlay-text">
-              <p class="overlay-status">Work in Progress</p>
-              <p class="overlay-note">Manuscript with literary agent</p>
-            </div>
-          </div>
-        </div>
-        <h3 class="book-title">The Shame Paradox</h3>
-        <p class="book-desc">Through neuroscience, a startling reinterpretation of Genesis, and three clinical stories that stay with you long after reading, this book traces shame from infant neurobiology to its place in consciousness itself — arguing that the emotion we spend our lives fleeing is the one that makes us irreplaceably human.</p>
-        <div class="book-buttons">
-          <a href="https://theshameparadox.com" class="btn btn-dark btn-sm">Go to Website</a>
-          <a href="#" class="btn btn-outline btn-sm disabled" disabled>Buy Now</a>
-        </div>
-        <p class="placeholder-note">Coming soon</p>
+  <!-- MILESTONE 1 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">August 24, 2025</div>
+      <div class="timeline-title">The Concept Begins</div>
+      <div class="timeline-description">
+        The central question forms: <em>"What if everything you know about shame is backwards?"</em> Nicole commits to exploring shame not as pathology but as the neural infrastructure of consciousness itself.
       </div>
-
-      <div class="book-card reveal">
-        <div class="book-cover-frame">
-          <img src="couples-therapy-cover.jpg" alt="The Shame Paradox — book cover by Nicole Chew-Helbig" />
-        </div>
-        <h3 class="book-title">A Gestalt Approach to Couples Therapy</h3>
-        <p class="book-desc">Published by Routledge. A framework for understanding how genuine connection emerges from embracing individuality — integrating Gestalt therapy principles with cross-cultural perspectives to navigate the dynamic tension between autonomy and togetherness.</p>
-        <div class="book-buttons">
-          <a href="/couples-therapy" class="btn btn-dark btn-sm">Learn More</a>
-          <a href="https://www.amazon.com/Gestalt-Approach-Couples-Therapy-Difference/dp/1041051468" target="_blank" class="btn btn-outline btn-sm">Buy Now</a>
-        </div>
-      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
     </div>
   </div>
-</section>
 
-<div class="quote-band">
-  <blockquote>&ldquo;The emotion we fear most is the one that makes all of this possible.&rdquo;</blockquote>
-  <p class="q-attr">— from <em>The Shame Paradox</em></p>
+  <!-- MILESTONE 2 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">August–September 2025</div>
+      <div class="timeline-title">Research & Framework</div>
+      <div class="timeline-description">
+        Intensive research phase. References compiled across neuroscience, philosophy (Buber, Naranjo, Simone Weil, Chödrön), clinical literature. The book's architecture takes shape: eight chapters weaving consciousness, relationship, neurobiology, and healing.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 3 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">September–October 2025</div>
+      <div class="timeline-title">Writing Begins: Part I</div>
+      <div class="timeline-description">
+        Chapter 1 (Eden) and Chapter 2 (Relationship) written. The philosophical and developmental foundations are established, grounded in clinical experience and personal narrative.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 4 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">October–December 2025</div>
+      <div class="timeline-title">Writing Continues: The Shadow Work</div>
+      <div class="timeline-description">
+        Chapters 5, 6, and 8 completed. The hardest chapters written: Humiliation, Shamelessness, and Therapy—threading the clinical case studies of Mark, Tina, and Clarke throughout to show shame's spiral and its healing.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 5 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">February 8, 2026</div>
+      <div class="timeline-title">Manuscript Structure Finalized</div>
+      <div class="timeline-description">
+        After months of refinement with developmental editing, the manuscript is reorganized into its final 8-chapter structure. Word count: 280–320 pages. The book is ready for submission.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 6 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">February 17, 2026</div>
+      <div class="timeline-title">Query Submissions to Agents</div>
+      <div class="timeline-description">
+        Manuscript submitted to eight literary agents including Emma Perry, Richard Pine, Kate Evans, and Natalie Edwards. The traditional publishing path begins.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 7 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">February 18, 2026</div>
+      <div class="timeline-title">First Agent Response</div>
+      <div class="timeline-description">
+        Donya Dickerson at Aevitas Creative Management passes. Standard rejection. Waiting continues for responses from other agents.
+      </div>
+      <span class="timeline-status status-milestone">MILESTONE</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 8 -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">March 6, 2026</div>
+      <div class="timeline-title">Self-Publishing Decision</div>
+      <div class="timeline-description">
+        After reflection, Nicole decides on self-publishing through her imprint HELBIG. Faster to market, complete creative control, and the book speaks for itself. ISBNs pending from NLB.
+      </div>
+      <span class="timeline-status status-current">CURRENT</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 9 - UPCOMING -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">Mid-April 2026</div>
+      <div class="timeline-title">Feedback from Editor Karin</div>
+      <div class="timeline-description">
+        Manuscript returns from editor Karin with final copy-editing notes. Cover design finalized. Final revisions completed.
+      </div>
+      <span class="timeline-status status-upcoming">UPCOMING</span>
+    </div>
+  </div>
+
+  <!-- MILESTONE 10 - UPCOMING -->
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <div class="timeline-date">May 2026</div>
+      <div class="timeline-title">Book Launch</div>
+      <div class="timeline-description">
+        <em>The Shame Paradox: Why We Fear Most the Emotion That Keeps Us Human</em> launches on KDP and IngramSpark. ISBN assigned. Available in print and digital formats worldwide.
+      </div>
+      <span class="timeline-status status-upcoming">UPCOMING</span>
+    </div>
+  </div>
+
 </div>
 
-<section class="work-section">
-  <div class="work-inner">
-    <h2 class="section-title">The Work</h2>
-
-    <div class="work-item reveal">
-      <span class="work-label">Writing</span>
-      <div class="work-text">
-        <h3>Consciousness, Relationship &amp; What Makes Us Human</h3>
-        <p>My writing moves between clinical practice, neuroscience, philosophy, and memoir. I am drawn to the questions that sit at the edge of what psychotherapy can articulate — where shame meets consciousness, where relationship meets moral life, and where the body knows what words cannot yet say.</p>
-      </div>
-    </div>
-
-    <div class="work-item reveal">
-      <span class="work-label">Research</span>
-      <div class="work-text">
-        <h3>Therapeutic Autoethnography</h3>
-        <p>My doctoral research developed a practice-based methodology built on the conviction that clinical knowledge is transmitted through story — as healers have always done for their apprentices. Published in peer-reviewed journals including the <em>European Journal of Psychotherapy &amp; Counselling</em>.</p>
-      </div>
-    </div>
-
-    <div class="work-item reveal">
-      <span class="work-label">Clinical</span>
-      <div class="work-text">
-        <h3>Gestalt Psychotherapy in Singapore</h3>
-        <p>Ten years of practice across Vienna and Singapore — working with individuals, couples, and communities. My approach is experiential and relational: grounded in field theory, attentive to the body, shaped by work with asylum seekers, war trauma survivors, and the ordinary suffering of people trying to stay present to each other.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="about" class="about">
-  <div class="about-inner">
-    <div class="about-photo-placeholder reveal">
-      Author headshot<br>to be added
-    </div>
-    <div class="about-text reveal">
-      <h2>About Nicole</h2>
-      <p>I hold a doctorate in Psychotherapy Science from Vienna and am a certified Integrative Gestalt psychotherapist practising in Singapore. Before entering psychotherapy, I trained as a biochemist at the National University of Singapore and built a career in the food and beverage industry.</p>
-      <p>My path into mental health deepened during the refugee crisis in Austria, where I worked with asylum seekers and war trauma survivors across language and cultural divides. That experience — of sitting with suffering that had no shared language — shaped everything I now write and practise.</p>
-      <p>I am also a painter. I grew up in a multicultural Chinese-Eurasian family, attended a convent school, and carry an outsider's perspective on Western therapeutic culture that informs much of what I do. I maintain a full clinical practice alongside my writing, art, and community.</p>
-      <div class="about-links">
-        <a href="https://psychotherapist.sg" target="_blank">psychotherapist.sg</a>
-        <a href="https://nikhelbig.at" target="_blank">nikhelbig.at</a>
-        <a href="https://nik-helbig.pixels.com" target="_blank">Art</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="quote-band-alt">
-  <blockquote>&ldquo;What makes humans irreplaceable to each other, even in an age of artificial intelligence?&rdquo;</blockquote>
-  <p class="q-attr">— the question at the heart of <em>The Shame Paradox</em></p>
+<div class="cta-section">
+  <h3>Stay Updated</h3>
+  <p>Follow Nicole's work, clinical practice, and writing across her platforms.</p>
+  <a href="https://nicolechewhelbig.com" class="btn">Visit Nicole's Site</a>
 </div>
 
-<section id="practice" class="practice">
-  <div class="practice-inner reveal">
-    <h2>Work with Nicole</h2>
-    <p>I work with individuals and couples in Singapore. My approach is experiential — grounded in Gestalt field theory, attentive to the body, and shaped by a deep respect for the therapeutic relationship itself as the primary instrument of change.</p>
-    <p>For clinical enquiries, speaking invitations, workshops, or supervision:</p>
-    <a href="mailto:nicole@psychotherapist.sg" class="btn btn-dark">Get in Touch</a>
-    <p class="placeholder-note" style="margin-top: 0.8rem;">Update email address as needed</p>
-  </div>
-</section>
-
-<section id="contact" class="newsletter">
-  <div class="newsletter-inner">
-    <h2>Stay Connected</h2>
-    <p>Occasional writing on consciousness, relationship, and what it means to be human.</p>
-    <div class="nl-form">
-      <input type="email" placeholder="Your email address" aria-label="Email address">
-      <button type="button">Subscribe</button>
-    </div>
-    <p class="placeholder-note" style="margin-top: 0.75rem;">Connect to your email service</p>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-links">
-    <a href="https://psychotherapist.sg" target="_blank">psychotherapist.sg</a>
-    <a href="https://nikhelbig.at" target="_blank">nikhelbig.at</a>
-    <a href="https://nik-helbig.pixels.com" target="_blank">Art</a>
-  </div>
-  <p class="footer-copy">&copy; 2026 Nicole Chew-Helbig. All rights reserved.</p>
+<footer class="timeline-note">
+  <p>This timeline tracks the creation of <em>The Shame Paradox</em> from concept to publication. Updated as milestones unfold. Manuscript by Nicole Chew-Helbig. Self-published under HELBIG through FieldNotes Press.</p>
 </footer>
-
-<script>
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function(e) {
-      const t = document.querySelector(this.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.querySelector('.nav-links')?.classList.remove('open'); }
-    });
-  });
-</script>
 
 </body>
 </html>
