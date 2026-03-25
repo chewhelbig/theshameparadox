@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shame Paradox — Reel Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --surface2: #f5f2ed;
+    --border: #e8e2d9;
+    --text: #1a1612;
+    --text-muted: #7a6f62;
+    --accent: #2c4a6b;
+    --accent-light: #e8f0f8;
+    --gold: #c4963a;
+    --gold-light: #fdf6e8;
+    --green: #2d6a4f;
+    --green-light: #d8f3e3;
+    --red: #8b2635;
+    --red-light: #fde8eb;
+    --purple: #5c3d7a;
+    --purple-light: #ede8f5;
+    --orange: #c45a1a;
+    --orange-light: #fdf0e6;
+    --shadow: 0 2px 12px rgba(44,74,107,0.08);
+    --shadow-hover: 0 6px 24px rgba(44,74,107,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 2.5rem 2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(44,74,107,0.3);
+  }
+  header .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+  header h1 span {
+    display: block;
+    font-size: 0.95rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-top: 0.3rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .header-stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--accent);
+    padding: 0.8rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .progress-bar-wrap .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  /* CONTROLS */
+  .controls {
+    max-width: 1400px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.4rem 1rem;
+    border: 1.5px solid var(--border);
+    background: white;
+    border-radius: 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+  .search-wrap input {
+    padding: 0.4rem 1rem 0.4rem 2.2rem;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    width: 220px;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 4rem;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .section-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .section-progress {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-bar {
+    width: 80px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .section-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+  .section-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .toggle-icon {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+  }
+  .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+  .section-body { }
+  .section.collapsed .section-body { display: none; }
+
+  /* REEL CARD */
+  .reel-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    transition: all 0.2s;
+    overflow: visible;
+  }
+  .reel-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: #ccc;
+  }
+  .reel-card.done {
+    opacity: 0.6;
+    background: var(--surface2);
+  }
+  .reel-card.done .card-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .card-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+  }
+  .card-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+  .card-check:hover { border-color: var(--accent); }
+  .reel-card.done .card-check {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 32px;
+    margin-top: 1px;
+  }
+  .card-body { flex: 1; min-width: 0; }
+  .card-type {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+  .card-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .card-actions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  /* COLOR TAG */
+  .color-tag {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s;
+    flex-shrink: 0;
+  }
+  .color-tag:hover { transform: scale(1.3); }
+  .color-tag.priority { background: var(--red); }
+  .color-tag.in-progress { background: var(--gold); }
+  .color-tag.done-tag { background: var(--green); }
+  .color-tag.idea { background: var(--purple); }
+  .color-tag.scheduled { background: var(--orange); }
+  .color-tag.clear { background: var(--border); }
+
+  .color-picker-wrap {
+    position: relative;
+  }
+  .color-picker-popup {
+    display: none;
+    position: fixed;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem;
+    box-shadow: var(--shadow-hover);
+    z-index: 9999;
+    gap: 0.4rem;
+    flex-direction: column;
+    min-width: 130px;
+  }
+  .color-picker-popup.open { display: flex; }
+  .color-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .color-option:hover { background: var(--surface2); }
+  .color-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* STATUS DOT */
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .status-dot.none { background: transparent; }
+  .status-dot.priority { background: var(--red); }
+  .status-dot.in-progress { background: var(--gold); }
+  .status-dot.done-tag { background: var(--green); }
+  .status-dot.idea { background: var(--purple); }
+  .status-dot.scheduled { background: var(--orange); }
+
+  /* EXPAND/MEMO */
+  .expand-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .expand-btn:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .card-detail {
+    padding: 0.8rem 1rem 0.9rem 3.8rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+    border-radius: 0 0 10px 10px;
+    display: none;
+  }
+  .card-detail.open { display: block; }
+  .detail-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .detail-field {
+    flex: 1;
+    min-width: 180px;
+  }
+  .detail-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+  .detail-input, .detail-textarea {
+    width: 100%;
+    padding: 0.45rem 0.7rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .detail-input:focus, .detail-textarea:focus { border-color: var(--accent); }
+  .detail-textarea {
+    min-height: 70px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .link-preview {
+    display: none;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+  .link-preview a { color: inherit; }
+
+  /* TIMELINE SECTION */
+  .timeline-section {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .timeline-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .timeline-live {
+    font-size: 0.7rem;
+    background: var(--red);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.8rem;
+  }
+  .timeline-card {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    background: var(--surface2);
+    transition: all 0.2s;
+  }
+  .timeline-card:hover { box-shadow: var(--shadow); }
+  .timeline-card.completed {
+    background: var(--green-light);
+    border-color: var(--green);
+  }
+  .timeline-card.in-progress {
+    background: var(--gold-light);
+    border-color: var(--gold);
+  }
+  .tl-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+  .tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+  .tl-body {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .tl-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    display: block;
+    margin-top: 0.4rem;
+    word-break: break-all;
+  }
+  .tl-empty {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  /* COLOR LEGEND */
+  .legend {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+  }
+  .legend-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-right: 0.5rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* SAVE INDICATOR */
+  .save-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--green);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 1000;
+  }
+  .save-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* HIDDEN CARD */
+  .reel-card.hidden { display: none; }
+
+  @media (max-width: 600px) {
+    header { padding: 1.5rem 1rem 1rem; }
+    main { padding: 1rem 1rem 3rem; }
+    .controls { padding: 0 1rem; }
+    .card-actions { display: none; }
+    .card-detail { padding-left: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div>
+      <h1>The Shame Paradox
+        <span>YouTube Reel Production Tracker</span>
+      </h1>
+    </div>
+    <div class="header-stats">
+      <div class="stat">
+        <div class="stat-number" id="total-count">402</div>
+        <div class="stat-label">Total Reels</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="done-count">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="pct">0%</div>
+        <div class="stat-label">Progress</div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="progress-bar-wrap">
+  <div class="inner">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label">0 of 402 reels published</div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterCards('all', this)">All (402)</button>
+  <button class="filter-btn" onclick="filterCards('todo', this)">To Do</button>
+  <button class="filter-btn" onclick="filterCards('done', this)">Done ✓</button>
+  <button class="filter-btn" onclick="filterCards('priority', this)">🔴 Priority</button>
+  <button class="filter-btn" onclick="filterCards('in-progress', this)">🟡 In Progress</button>
+  <button class="filter-btn" onclick="filterCards('scheduled', this)">🟠 Scheduled</button>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search reels..." oninput="searchCards(this.value)">
+  </div>
+</div>
+
+<main>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-title">Colour Tags:</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--red)"></span> Priority</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--gold)"></span> In Progress</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--green)"></span> Done</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--purple)"></span> Idea/Notes</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--orange)"></span> Scheduled</span>
+    <span class="legend-item"><span class="color-dot" style="background:var(--border)"></span> Clear</span>
+  </div>
+
+  <!-- LIVE TIMELINE -->
+  <div class="timeline-section">
+    <div class="timeline-title">
+      Live Timeline
+      <span class="timeline-live">LIVE</span>
+    </div>
+    <div class="timeline-grid" id="timeline-grid">
+      <div class="tl-empty">No reels published yet. Complete a reel and add a link to see it appear here.</div>
+    </div>
+  </div>
+
+  <!-- REEL SECTIONS -->
+  <div id="sections-container"></div>
+
+</main>
+
+<div class="save-toast" id="save-toast">✓ Saved</div>
+
+<script>
+// ===================== DATA =====================
+const SECTIONS = [
+  { id: 's1', title: 'Part 1: Preface, Introduction & Chapter 1', range: '#1–40', count: 40 },
+  { id: 's2', title: 'Part 2: Chapter 2 — In the Beginning Is the Face', range: '#41–77', count: 37 },
+  { id: 's3', title: 'Part 3: Chapter 3 — Neurons That Fire Together', range: '#78–120', count: 43 },
+  { id: 's4', title: 'Part 4: Chapter 4 — The Doorbell', range: '#121–166', count: 46 },
+  { id: 's5', title: 'Part 5: Chapter 5 — The Executioner Does Not Know', range: '#167–212', count: 46 },
+  { id: 's6', title: 'Part 6: Chapter 6 — Love Is a Stranger', range: '#213–261', count: 49 },
+  { id: 's7', title: 'Part 7: Chapter 7 — The Gift', range: '#262–311', count: 50 },
+  { id: 's8', title: 'Part 8: Chapter 8 — Bring Me Home', range: '#312–361', count: 50 },
+  { id: 's9', title: 'Part 9: Epilogue — The Machine in the Room', range: '#362–402', count: 41 },
+];
+
+const REELS = [
+  // PART 1
+  {id:1,s:'s1',type:'🎭 STORY TEASER',text:'"My client trained an AI to replace me. Then something unexpected happened." — The ChatGPT/Mark opening. Pure intrigue.'},
+  {id:2,s:'s1',type:'🎭 STORY TEASER',text:'"He said, \'Your answers are quite close.\' I thought the AI gave better answers than I did." — Self-disclosure that disarms immediately.'},
+  {id:3,s:'s1',type:'🎭 STORY TEASER',text:'"Six women at a dinner table. Wine glasses. And we all sided with Eve." — The Nottingham scene.'},
+  {id:4,s:'s1',type:'🎭 STORY TEASER',text:'"Three people couldn\'t sleep that night. They all said the same thing." — The morning after Nottingham.'},
+  {id:5,s:'s1',type:'🎭 STORY TEASER',text:'"She had been telling her story for years. Then her breath caught. And everything changed." — The woman in the consulting room, mid-sentence.'},
+  {id:6,s:'s1',type:'🎭 STORY TEASER',text:'"She stood outside in the rain. She didn\'t ring the doorbell. She wasn\'t sure it was the right thing to do." — Tina\'s introduction.'},
+  {id:7,s:'s1',type:'🎭 STORY TEASER',text:'"He walked in because his wife discovered the affair. He sat across from me, smiling, utterly relaxed. And something in my body went cold." — Clarke\'s introduction.'},
+  {id:8,s:'s1',type:'❓ PROVOCATION',text:'"If you could go back to Eden — no shame, no suffering, no knowledge — would you? What would you give up?"'},
+  {id:9,s:'s1',type:'❓ PROVOCATION',text:'"We\'ve been reading Genesis wrong for 2,000 years. What if the Fall was actually the beginning?"'},
+  {id:10,s:'s1',type:'❓ PROVOCATION',text:'"What if Brené Brown\'s definition of shame… isn\'t shame at all?"'},
+  {id:11,s:'s1',type:'❓ PROVOCATION',text:'"Quiz: Is what you\'re feeling shame, converted shame, or humiliation? They are three completely different things."'},
+  {id:12,s:'s1',type:'❓ PROVOCATION',text:'"What if OCD is actually compulsive obedience? The checking as genuflection. The confession as submission."'},
+  {id:13,s:'s1',type:'❓ PROVOCATION',text:'"Can a person who cannot feel shame actually love? The neuroscience says no."'},
+  {id:14,s:'s1',type:'❓ PROVOCATION',text:'"What atrophies when nothing in your life offers resistance? (It\'s not your muscles.)"'},
+  {id:15,s:'s1',type:'💡 IDEA APPETISER',text:'"Shame and empathy share the same neural circuits. You literally cannot numb one without numbing the other."'},
+  {id:16,s:'s1',type:'💡 IDEA APPETISER',text:'"The pain of shame is not a metaphor. Your brain registers social rejection in the same place it registers physical pain."'},
+  {id:17,s:'s1',type:'💡 IDEA APPETISER',text:'"Shame doesn\'t live inside you. It lives between you and another person. That changes everything about how to heal it."'},
+  {id:18,s:'s1',type:'💡 IDEA APPETISER',text:'"Building resilience against shame is, at a structural level, building resilience against connection itself."'},
+  {id:19,s:'s1',type:'💡 IDEA APPETISER',text:'"The child who was shamed repeatedly didn\'t grow up feeling moral pain. She grew up believing she is the pain."'},
+  {id:20,s:'s1',type:'💡 IDEA APPETISER',text:'"God\'s response to Adam and Eve wasn\'t anger. It was: \'They have become like us.\' What if God here is a parent, not a judge?"'},
+  {id:21,s:'s1',type:'💡 IDEA APPETISER',text:'"Shame is relational gravity. Without it, you don\'t become free. You become weightless. And weightlessness atrophies the soul."'},
+  {id:22,s:'s1',type:'💡 IDEA APPETISER',text:'"The promise of every addiction is the same: to go back to Eden. To the place before you knew you were naked."'},
+  {id:23,s:'s1',type:'💡 IDEA APPETISER',text:'"We are building machines that can process moral information without bearing its weight. And we call that progress."'},
+  {id:24,s:'s1',type:'🪞 PERSONAL',text:'"I was too ashamed to write a book about shame. The irony was not lost on me."'},
+  {id:25,s:'s1',type:'🪞 PERSONAL',text:'"I had no right, I told myself. I would be exposed as presumptuous, unqualified, ridiculous. That lived in my body as tightness in the chest."'},
+  {id:26,s:'s1',type:'🪞 PERSONAL',text:'"I learned to meditate as a teenager — alone, in dark Catholic chapels in Singapore — without knowing that\'s what I was doing."'},
+  {id:27,s:'s1',type:'🪞 PERSONAL',text:'"I grew up Catholic. I watched my family disintegrate. And I found refuge in the one place no one would look for me."'},
+  {id:28,s:'s1',type:'🪞 PERSONAL',text:'"I asked God for one thing. I didn\'t know what wisdom meant. I was a teenager trying to escape."'},
+  {id:29,s:'s1',type:'🪞 PERSONAL',text:'"I recognised something: I was experiencing exactly what the book was about. The paralysing belief that being seen would lead to annihilation."'},
+  {id:30,s:'s1',type:'🌍 CULTURAL ANGLE',text:'"Growing up in Singapore, I learned the Eden story from four different traditions at once. They were all telling the same story."'},
+  {id:31,s:'s1',type:'🌍 CULTURAL ANGLE',text:'"The Buddha woke not to bliss but to the full reality of suffering. Consciousness isn\'t comfort. It\'s cost."'},
+  {id:32,s:'s1',type:'🌍 CULTURAL ANGLE',text:'"Every major wisdom tradition says the same thing: to become fully alive, you must pass through suffering. They were all right."'},
+  {id:33,s:'s1',type:'🌍 CULTURAL ANGLE',text:'"What the convent school taught me, and what my Chinese, Indian, and Malay classmates taught me — the two were very different things."'},
+  {id:34,s:'s1',type:'⚡ ONE-LINER',text:'"Shamelessness is not freedom. It\'s the death of conscience."'},
+  {id:35,s:'s1',type:'⚡ ONE-LINER',text:'"The thing you most want to eliminate is the only thing that makes love possible."'},
+  {id:36,s:'s1',type:'⚡ ONE-LINER',text:'"You cannot be loved for who you are by someone who has never seen who you are."'},
+  {id:37,s:'s1',type:'⚡ ONE-LINER',text:'"The affirmations float above the wound like oil on water."'},
+  {id:38,s:'s1',type:'⚡ ONE-LINER',text:'"This is not a book about shame. It is a book written from inside it."'},
+  {id:39,s:'s1',type:'⚡ ONE-LINER',text:'"What makes humans irreplaceable to each other, even in an age of artificial intelligence?"'},
+  {id:40,s:'s1',type:'⚡ ONE-LINER',text:'"She understood it perfectly. What changed was not her knowledge. It was her location."'},
+  // PART 2
+  {id:41,s:'s2',type:'🎭 STORY TEASER',text:'"I\'ve shown this 90-second video to clients more times than I can count. Every single time, the recognition is immediate. Their body does it before they can think." — The Still Face experiment reveal moment.'},
+  {id:42,s:'s2',type:'🎭 STORY TEASER',text:'"She doesn\'t believe in therapy. She\'s here for tips and strategies. But the moment she walks in, my dog goes still. The room goes cold. And I know exactly what her daughter is living inside." — The Cathy scene.'},
+  {id:43,s:'s2',type:'🎭 STORY TEASER',text:'"She\'s forty-three. Her husband glances at his phone. And her body goes into a cascade she cannot explain and cannot stop — because it\'s responding to a signal imprinted before she had conscious memory."'},
+  {id:44,s:'s2',type:'🎭 STORY TEASER',text:'"He built his entire life around invisibility. Quiet job. Few friends. Evenings alone. He says he prefers solitude. His body tells a different story: he positions himself near the door."'},
+  {id:45,s:'s2',type:'🎭 STORY TEASER',text:'"I have never met a mother with a still face who did not have a mother with a still face." — The chain. Open with this, let it sit.'},
+  {id:46,s:'s2',type:'🎭 STORY TEASER',text:'"The babies in the Romanian orphanages were fed, clothed, bathed, and sheltered. They weren\'t abused. What they lacked was a face. And researchers found their brains had literally grown differently."'},
+  {id:47,s:'s2',type:'🎭 STORY TEASER',text:'"René Spitz documented it in the 1940s: infants in hospitals who received every physical need — but no responsive face. They didn\'t fail to thrive. They died."'},
+  {id:48,s:'s2',type:'❓ PROVOCATION',text:'"Before you had a name for anything, there was a face. Your entire sense of self was built in the space between you and that face. What happens when the face goes blank?"'},
+  {id:49,s:'s2',type:'❓ PROVOCATION',text:'"An infant whose mother\'s face goes still doesn\'t conclude the mother is behaving strangely. It concludes it caused the rupture. Before thought is possible. Can you feel that in yourself still?"'},
+  {id:50,s:'s2',type:'❓ PROVOCATION',text:'"Quiz: When your partner goes quiet — what does your body do first? The answer tells you everything about what your nervous system learned before you had words."'},
+  {id:51,s:'s2',type:'❓ PROVOCATION',text:'"Could a robot raise a child? The Romanian orphanage data already answered this — 70 years before anyone thought to ask. The answer is devastating."'},
+  {id:52,s:'s2',type:'❓ PROVOCATION',text:'"The thing that builds the human brain isn\'t genetics. It\'s not stimulation. It\'s not nutrition. It\'s one thing. Can you guess what it is?" — Answer: a responsive face.'},
+  {id:53,s:'s2',type:'❓ PROVOCATION',text:'"What if the \'inexplicable anxiety\' you feel when someone doesn\'t text back is not anxiety at all? What if it\'s something much older than that?"'},
+  {id:54,s:'s2',type:'💡 IDEA APPETISER',text:'"The mother\'s face is the infant\'s first mirror — the first one that can turn away. Everything we understand about self-consciousness begins there, not at the actual mirror."'},
+  {id:55,s:'s2',type:'💡 IDEA APPETISER',text:'"We do not arrive in the world as isolated individuals who then learn to connect. We arrive already inside a relationship. The idea that we are fundamentally separate is a construction that develops much later."'},
+  {id:56,s:'s2',type:'💡 IDEA APPETISER',text:'"The infant who reaches for a blank face doesn\'t cry because they\'re sad. They flush, their gaze drops, their energy deflates. That\'s shame. In a creature that cannot think, evaluate itself, or understand rules. Shame is older than thought."'},
+  {id:57,s:'s2',type:'💡 IDEA APPETISER',text:'"Every people-pleaser began here: an infant trying harder, smiling more broadly, vocalising more intensely — as if effort alone could recover the connection that had gone blank."'},
+  {id:58,s:'s2',type:'💡 IDEA APPETISER',text:'"Shame can become a somatic identity. Not \'something bad happened to me.\' But \'I am bad.\' Not \'the relationship failed.\' But \'I am the kind of person relationships fail with.\' And the body decided this before reasoning was even possible."'},
+  {id:59,s:'s2',type:'💡 IDEA APPETISER',text:'"You cannot reason someone out of something their body decided before reasoning became possible. This is why insight alone so often fails with shame."'},
+  {id:60,s:'s2',type:'💡 IDEA APPETISER',text:'"Rupture and repair. That\'s the whole architecture of healthy emotional development. It\'s not the rupture that damages — it\'s the absence of the repair."'},
+  {id:61,s:'s2',type:'💡 IDEA APPETISER',text:'"The body that never experienced repair concludes: rupture is permanent. And it will spend the rest of its life trying to prevent that rupture — or waiting for it."'},
+  {id:62,s:'s2',type:'💡 IDEA APPETISER',text:'"The neural structure that enables shame, empathy, and emotional regulation doesn\'t develop from genetics or stimulation. It requires a responsive other. A being that can be affected by your existence."'},
+  {id:63,s:'s2',type:'💡 IDEA APPETISER',text:'"A robot can be programmed to hold, to make eye contact, to mirror expressions perfectly. And the infant would still sense the difference. What\'s missing is a being that is at risk during the encounter."'},
+  {id:64,s:'s2',type:'💡 IDEA APPETISER',text:'"The fish never considers the water. We never consider the relational field we swim in — until we\'re taken out of it. Then we gasp for something we cannot name."'},
+  {id:65,s:'s2',type:'🪞 PERSONAL',text:'"I have watched this 90-second experiment more times than I can count. And it devastates me every time. Not because I am sentimental about babies. Because I recognise every adult who has ever sat across from me in it."'},
+  {id:66,s:'s2',type:'🪞 PERSONAL',text:'"I cannot tell Cathy what I see. Not yet. If I named it, she would hear blame. And blame would drive her away from the room she hasn\'t yet realised she needs to be in."'},
+  {id:67,s:'s2',type:'🪞 PERSONAL',text:'"I sit with what the Still Face becomes in adults. The woman who cannot stop checking her phone after being ghosted. She is the infant in the experiment. Her body hasn\'t been told it\'s been forty years."'},
+  {id:68,s:'s2',type:'🌍 UNEXPECTED ANGLE',text:'"Martin Buber wrote \'In the beginning is the relationship\' in 1923. Developmental neuroscience spent the next hundred years proving he was right."'},
+  {id:69,s:'s2',type:'🌍 UNEXPECTED ANGLE',text:'"The Bucharest Early Intervention Project found something critical: children moved into foster homes before 24 months showed remarkable brain recovery. After 24 months, far less. The window is real. And it closes."'},
+  {id:70,s:'s2',type:'🌍 UNEXPECTED ANGLE',text:'"We are building AI companions, humanoid robots, and digital caregivers. René Spitz\'s 1940s data already tells us what will be missing — long before any of these machines existed."'},
+  {id:71,s:'s2',type:'⚡ ONE-LINER',text:'"Self-consciousness does not start with the mirror. It begins with the mother\'s face — the first mirror, one that can turn away."'},
+  {id:72,s:'s2',type:'⚡ ONE-LINER',text:'"The child does not remember these moments. But her body does."'},
+  {id:73,s:'s2',type:'⚡ ONE-LINER',text:'"The face that goes blank doesn\'t intend harm. That\'s what makes it so hard to name."'},
+  {id:74,s:'s2',type:'⚡ ONE-LINER',text:'"Breaking the chain is the work. And the work is not insight. It is physical."'},
+  {id:75,s:'s2',type:'⚡ ONE-LINER',text:'"The infant\'s verdict — \'I caused the rupture\' — persists within neural architecture the adult cannot see, cannot argue with, and cannot override through willpower."'},
+  {id:76,s:'s2',type:'⚡ ONE-LINER',text:'"They died not because no one fed them. But because no one could be hurt by their cry."'},
+  {id:77,s:'s2',type:'⚡ ONE-LINER',text:'"Warmth. And the absence of warmth. That\'s the whole world, in the beginning."'},
+  // PARTS 3-9: abbreviated — load from storage for brevity, include key samples
+  {id:78,s:'s3',type:'🎭 STORY TEASER',text:'"My clients describe shame in remarkably consistent language. \'It feels like I\'m dissolving.\' \'I want to vanish into the ground.\' \'It\'s like being punched — but from the inside.\' I used to think these were metaphors. Then I looked at the brain scans."'},
+  {id:79,s:'s3',type:'🎭 STORY TEASER',text:'"Darwin devoted an entire chapter to blushing. He called it \'the most peculiar and the most human of all expressions.\' Dogs show fear. Primates show rage. Only humans blush. And Darwin couldn\'t explain why evolution would preserve something so useless. He was looking at the wrong question."'},
+  {id:94,s:'s3',type:'💡 IDEA APPETISER',text:'"Shame is the subjective experience of the neural machinery that makes us capable of love. The thing we most want to eliminate is the operating system for everything we most value."'},
+  {id:98,s:'s3',type:'💡 IDEA APPETISER',text:'"When we numb shame, we numb our humanity. Not metaphorically. Neurologically."'},
+  {id:104,s:'s3',type:'🤖 AI ANGLE',text:'"The real question isn\'t whether we will experience pain. It\'s what we are prepared to give up to avoid it."'},
+  {id:114,s:'s3',type:'⚡ ONE-LINER',text:'"Shame is a whole-brain event. That\'s why nothing partial fixes it."'},
+  {id:116,s:'s3',type:'⚡ ONE-LINER',text:'"The circuits that make shame unbearable are the same ones that make love possible."'},
+  {id:120,s:'s3',type:'⚡ ONE-LINER',text:'"Shame hurts as much as anything the body can generate. Because it is the body."'},
+  {id:121,s:'s4',type:'🎭 STORY TEASER',text:'"She had memorised the subway map. She had rehearsed the route. She arrived early. She found my name on the buzzer. And then she stood in the rain and waited. When I asked why she hadn\'t rung the bell, she said: \'I wasn\'t sure if ringing the bell was the right thing to do.\' That sentence is the entire book."'},
+  {id:129,s:'s4',type:'❓ PROVOCATION',text:'"The diagnostic system asks: What do you have? But there\'s a second question it never asks — the one that changes everything. What was this system built to survive?"'},
+  {id:141,s:'s4',type:'💡 IDEA APPETISER',text:'"Sobriety means not using the substance. Recovery means not needing to escape yourself. These are not the same destination."'},
+  {id:156,s:'s4',type:'🔁 THE QUESTION',text:'"There is a question that, when asked in therapy, shifts something fundamental in the room. Not: what is your diagnosis? But: what was so unbearable that you had to build this? That question treats every symptom as an achievement. A costly, painful, sometimes devastating achievement — but an achievement. Because it kept you alive."'},
+  {id:162,s:'s4',type:'⚡ ONE-LINER',text:'"What do you have? is the wrong question. What was this built to survive? is the right one."'},
+  {id:166,s:'s4',type:'⚡ ONE-LINER',text:'"Recognition is itself a form of healing. Not understanding. Not diagnosis. The moment when someone else\'s architecture makes you feel, in your own body, the weight of what they built and why."'},
+  {id:167,s:'s5',type:'🎭 STORY TEASER',text:'"Clarke wept in my consulting room. His voice broke. For ten minutes I felt genuinely sorry for him. Then he left. The door closed. I sat in the silence. And I felt it again — the cold. The tears were real. But they evaporated before he reached the lift."'},
+  {id:182,s:'s5',type:'💡 IDEA APPETISER',text:'"Shame is bidirectional. It arises between people who can affect each other. Humiliation is unidirectional. The perpetrator feels nothing. The victim feels everything."'},
+  {id:190,s:'s5',type:'💡 IDEA APPETISER',text:'"Gisèle Pelicot stood in a French courtroom and said: \'It\'s not for us to have shame — it\'s for them.\' In that single sentence, she performed the operation this entire chapter describes. She returned the shame to its source."'},
+  {id:205,s:'s5',type:'⚡ ONE-LINER',text:'"The innocent experience their own innocence as guilt. That is the definition of projection."'},
+  {id:207,s:'s5',type:'⚡ ONE-LINER',text:'"The executioner does not know what he carries. The victim knows exactly."'},
+  {id:211,s:'s5',type:'⚡ ONE-LINER',text:'"The tears were real. They just didn\'t land."'},
+  {id:213,s:'s6',type:'🎭 STORY TEASER',text:'"He has been telling me for twenty minutes why he must be responsible for his wife\'s infidelity. Not wrong about a specific thing — wrong in his being. He hasn\'t used the word shame yet. But shame is the only thing in the room."'},
+  {id:234,s:'s6',type:'💡 IDEA APPETISER',text:'"All four horsemen are shame conversions. Defensiveness converts the shame of being flawed into counter-attack. Criticism converts shame into projection. Stonewalling converts humiliation into punitive silence. Contempt converts shame into weaponised disgust. When you can bear your own shame, you have no use for any of them."'},
+  {id:248,s:'s6',type:'📱 DATING CULTURE',text:'"We have engineered the blush out of courtship — and then wonder why connection feels hollow. Relationship is the risk of shame. Remove that risk and what remains is not connection but transaction."'},
+  {id:253,s:'s6',type:'⚡ ONE-LINER',text:'"\'I have anxious attachment\' is a sentence you can say with your pulse steady. \'I am terrified that something about me makes people leave\' is not."'},
+  {id:255,s:'s6',type:'⚡ ONE-LINER',text:'"Shame is the connective tissue of love. Remove it, and what\'s left is performance."'},
+  {id:261,s:'s6',type:'⚡ ONE-LINER',text:'"The couple who heal don\'t get there through better communication. They get there by risking being truly seen."'},
+  {id:262,s:'s7',type:'🎭 STORY TEASER',text:'"Tina and I worked together for twenty-six sessions over eight months. One session involved me taking her to the hospital. And in one extraordinary afternoon, I opened the front door of my consulting room to symbolically invite her foremothers in. Tina sobbed. So did I."'},
+  {id:267,s:'s7',type:'🎭 STORY TEASER',text:'"She looked at me and said two words: \'You stayed.\' The entire book, in two words."'},
+  {id:272,s:'s7',type:'🎭 STORY TEASER',text:'"Mark said it simply after three years of work: \'I guess therapy isn\'t about getting the right answers. It\'s about being in a relationship where both people can be hurt.\'"'},
+  {id:288,s:'s7',type:'💡 IDEA APPETISER',text:'"Shame shared does not double — it resolves. The unbearable, when borne with another, becomes bearable. Not gone. Bearable."'},
+  {id:290,s:'s7',type:'💡 IDEA APPETISER',text:'"The face does not go still. That is all. That is everything."'},
+  {id:302,s:'s7',type:'⚡ ONE-LINER',text:'"\'You stayed.\' Two words. The entire book."'},
+  {id:305,s:'s7',type:'⚡ ONE-LINER',text:'"Shame shared does not double. It resolves."'},
+  {id:311,s:'s7',type:'⚡ ONE-LINER',text:'"The gift is still there. Still reachable. At the edge of the water, at dawn, after the worst night."'},
+  {id:312,s:'s8',type:'🎭 STORY TEASER',text:'"I was wrong about Clarke. I believed, for a long time, that he was an architecture so total it had consumed the person inside it. Then I noticed the detail I had almost missed. Clarke kept coming back."'},
+  {id:320,s:'s8',type:'🎭 STORY TEASER',text:'"Suave, charming Clarke knocked on Jonas\'s door. And upon seeing this grey-haired man with kind eyes, Clarke lost his ability to speak. It then dawned on Clarke that he was loved. And is loved."'},
+  {id:322,s:'s8',type:'🎭 STORY TEASER',text:'"\'Come in, son,\' Jonas said. Son. The word Jonas had earned by showing up at school events and making hotdogs for barbecue parties and teaching a small boy to ride a bicycle — and then watching the car turn the corner and going back into an empty house. The word that thirty years of silence had not revoked."'},
+  {id:344,s:'s8',type:'💡 IDEA APPETISER',text:'"Humility is the ability to shed the need to overcome shame. It is the healing of the fear of shame. The courage to allow the self to be human — human as we are, not as we wish to be. Flawed. Limited. Alive. Present. Made of earth. The ground is where we belong."'},
+  {id:349,s:'s8',type:'🌍 SYNTHESIS',text:'"Shame is not the enemy. It never was. This is what it takes to understand that: Clarke in Jonas\'s doorway. Tina saying \'I cannot help you.\' Mark on a beach at dawn, the warmth on his skin, unclenching. Three people. Three lives. One ground."'},
+  {id:352,s:'s8',type:'⚡ ONE-LINER',text:'"The armour does not protect. It imprisons."'},
+  {id:360,s:'s8',type:'⚡ ONE-LINER',text:'"Shame is not the obstacle. It is the door."'},
+  {id:361,s:'s8',type:'⚡ ONE-LINER',text:'"The ground held. That is all. The ground held."'},
+  {id:362,s:'s9',type:'🎭 STORY TEASER',text:'"I wrote this book with the help of artificial intelligence. I need to say that plainly — because this book argues that our capacity to feel shame is the last thing that makes us irreplaceable by machines. And I would be performing exactly the kind of shamelessness I have spent eight chapters diagnosing if I pretended otherwise."'},
+  {id:370,s:'s9',type:'🎭 STORY TEASER',text:'"I am afraid you will not care. I am afraid this book will disappear into the slush pile of a world that produces more content in a day than any human being could read in a lifetime. I am afraid the machine\'s 10 to 18 percent was generous. And I am sending it anyway."'},
+  {id:382,s:'s9',type:'💡 IDEA APPETISER',text:'"They know. They do not know. The difference is shame."'},
+  {id:386,s:'s9',type:'💡 IDEA APPETISER',text:'"What shame makes possible, when you stop running from it, is not fearlessness. Not resilience. Not the elimination of the trembling. But the willingness to tremble — and to reach for another person from that place."'},
+  {id:394,s:'s9',type:'🪞 AUTHOR VOICE',text:'"If you have read this far, and if something in these pages named what you have carried but could not say — then we have met. Not as expert and reader. Not as therapist and patient. As equals. As two human beings who see the same thing and, in the seeing, feel less alone. That is why I wrote this book. To be met."'},
+  {id:395,s:'s9',type:'⚡ ONE-LINER',text:'"The machine helped me carry it to the door. Only a human being could have written it. Because only a human being has been ashamed."'},
+  {id:397,s:'s9',type:'⚡ ONE-LINER',text:'"I am afraid you will not care. I am sending it anyway."'},
+  {id:402,s:'s9',type:'⚡ ONE-LINER',text:'"Humilitas. Humus. Human. I am on the ground. I am sending it anyway."'},
+];
+
+// ===================== STATE =====================
+let state = {};
+try {
+  const saved = localStorage.getItem('shameReelTracker');
+  if (saved) state = JSON.parse(saved);
+} catch(e) {}
+
+function getState(id) {
+  return state[id] || { done: false, color: 'none', memo: '', date: '', link: '' };
+}
+function setState(id, updates) {
+  state[id] = { ...getState(id), ...updates };
+  saveState();
+  updateStats();
+  updateTimeline();
+}
+function saveState() {
+  try { localStorage.setItem('shameReelTracker', JSON.stringify(state)); } catch(e) {}
+  showToast();
+}
+let toastTimer;
+function showToast() {
+  const t = document.getElementById('save-toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ===================== RENDER =====================
+function buildCard(reel) {
+  const s = getState(reel.id);
+  const div = document.createElement('div');
+  div.className = `reel-card${s.done ? ' done' : ''}`;
+  div.dataset.id = reel.id;
+  div.dataset.section = reel.s;
+  div.dataset.color = s.color;
+  div.dataset.text = reel.text.toLowerCase();
+
+  div.innerHTML = `
+    <div class="card-main">
+      <div class="status-dot ${s.color}" id="dot-${reel.id}"></div>
+      <div class="card-check" onclick="toggleDone(${reel.id})" title="Mark complete">
+        ${s.done ? '✓' : ''}
+      </div>
+      <div class="card-num">#${reel.id}</div>
+      <div class="card-body">
+        <div class="card-type">${reel.type}</div>
+        <div class="card-text">${reel.text}</div>
+      </div>
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <div class="color-picker-wrap">
+          <button class="expand-btn" onclick="toggleColorPicker(${reel.id}, this)" title="Tag colour">🏷</button>
+          <div class="color-picker-popup" id="cp-${reel.id}">
+            <div class="color-option" onclick="setColor(${reel.id},'priority')"><span class="color-dot" style="background:var(--red)"></span>Priority</div>
+            <div class="color-option" onclick="setColor(${reel.id},'in-progress')"><span class="color-dot" style="background:var(--gold)"></span>In Progress</div>
+            <div class="color-option" onclick="setColor(${reel.id},'done-tag')"><span class="color-dot" style="background:var(--green)"></span>Done</div>
+            <div class="color-option" onclick="setColor(${reel.id},'idea')"><span class="color-dot" style="background:var(--purple)"></span>Idea/Notes</div>
+            <div class="color-option" onclick="setColor(${reel.id},'scheduled')"><span class="color-dot" style="background:var(--orange)"></span>Scheduled</div>
+            <div class="color-option" onclick="setColor(${reel.id},'none')"><span class="color-dot" style="background:var(--border)"></span>Clear</div>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="toggleDetail(${reel.id})" title="Notes & link">📝 Notes</button>
+      </div>
+    </div>
+    <div class="card-detail" id="detail-${reel.id}">
+      <div class="detail-row">
+        <div class="detail-field">
+          <div class="detail-label">Recording / Publish Date</div>
+          <input type="date" class="detail-input" value="${s.date}" onchange="setState(${reel.id},{date:this.value})" />
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">YouTube / Reel Link</div>
+          <input type="url" class="detail-input" placeholder="https://youtube.com/..." value="${s.link}" oninput="updateLink(${reel.id},this.value)" />
+          <div class="link-preview" id="lp-${reel.id}">${s.link ? `<a href="${s.link}" target="_blank">▶ View Reel</a>` : ''}</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-field" style="min-width:100%">
+          <div class="detail-label">Memo / Notes</div>
+          <textarea class="detail-textarea" placeholder="Script edits, reminders, ideas..." oninput="setState(${reel.id},{memo:this.value})">${s.memo}</textarea>
+        </div>
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function toggleDone(id) {
+  const s = getState(id);
+  setState(id, { done: !s.done });
+  const card = document.querySelector(`.reel-card[data-id="${id}"]`);
+  if (!card) return;
+  const ns = getState(id);
+  card.classList.toggle('done', ns.done);
+  card.querySelector('.card-check').textContent = ns.done ? '✓' : '';
+  updateSectionProgress(card.dataset.section);
+}
+
+function toggleDetail(id) {
+  const d = document.getElementById(`detail-${id}`);
+  d.classList.toggle('open');
+}
+
+function toggleColorPicker(id, btnEl) {
+  const popup = document.getElementById('cp-' + id);
+  const isOpen = popup.classList.contains('open');
+
+  // Close all others
+  document.querySelectorAll('.color-picker-popup.open').forEach(p => p.classList.remove('open'));
+  if (isOpen) return;
+
+  // Smart positioning: use the button element passed in, or find it
+  const btn = btnEl || document.querySelector('[data-cpid="' + id + '"]');
+  if (btn) {
+    const rect = btn.getBoundingClientRect();
+    const popupH = 230;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    if (spaceBelow < popupH) {
+      popup.style.top = (rect.top - popupH) + 'px';
+    } else {
+      popup.style.top = (rect.bottom + 4) + 'px';
+    }
+    popup.style.left = Math.max(8, rect.right - 145) + 'px';
+    popup.style.right = 'auto';
+  }
+  popup.classList.add('open');
+}
+
+function setColor(id, color) {
+  setState(id, { color });
+  const card = document.querySelector(`.reel-card[data-id="${id}"]`);
+  if (card) {
+    card.dataset.color = color;
+    document.getElementById(`dot-${id}`).className = `status-dot ${color}`;
+  }
+  document.getElementById(`cp-${id}`).classList.remove('open');
+}
+
+function updateLink(id, link) {
+  setState(id, { link });
+  const lp = document.getElementById(`lp-${id}`);
+  if (lp) lp.innerHTML = link ? `<a href="${link}" target="_blank">▶ View Reel</a>` : '';
+  if (lp) lp.style.display = link ? 'block' : 'none';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.color-picker-wrap') && !e.target.closest('.color-picker-popup')) {
+    document.querySelectorAll('.color-picker-popup.open').forEach(p => p.classList.remove('open'));
+  }
+});
+
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.color-picker-popup.open').forEach(p => p.classList.remove('open'));
+}, { passive: true });
+
+// ===================== BUILD SECTIONS =====================
+function buildSections() {
+  const container = document.getElementById('sections-container');
+  SECTIONS.forEach(sec => {
+    const reels = REELS.filter(r => r.s === sec.id);
+    const secDiv = document.createElement('div');
+    secDiv.className = 'section';
+    secDiv.id = sec.id;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `
+      <span class="toggle-icon">▼</span>
+      <span class="section-title">${sec.title}</span>
+      <span class="section-meta">${sec.range} · ${sec.count} reels</span>
+      <div class="section-progress">
+        <div class="section-bar"><div class="section-bar-fill" id="bar-${sec.id}" style="width:0%"></div></div>
+        <span class="section-count" id="cnt-${sec.id}">0/${reels.length}</span>
+      </div>
+    `;
+    header.onclick = () => {
+      secDiv.classList.toggle('collapsed');
+    };
+
+    const body = document.createElement('div');
+    body.className = 'section-body';
+    reels.forEach(r => body.appendChild(buildCard(r)));
+
+    secDiv.appendChild(header);
+    secDiv.appendChild(body);
+    container.appendChild(secDiv);
+    updateSectionProgress(sec.id);
+  });
+}
+
+function updateSectionProgress(secId) {
+  const reels = REELS.filter(r => r.s === secId);
+  const done = reels.filter(r => getState(r.id).done).length;
+  const pct = reels.length ? Math.round(done / reels.length * 100) : 0;
+  const bar = document.getElementById(`bar-${secId}`);
+  const cnt = document.getElementById(`cnt-${secId}`);
+  if (bar) bar.style.width = pct + '%';
+  if (cnt) cnt.textContent = `${done}/${reels.length}`;
+}
+
+function updateStats() {
+  const done = REELS.filter(r => getState(r.id).done).length;
+  const pct = Math.round(done / REELS.length * 100);
+  document.getElementById('done-count').textContent = done;
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${done} of ${REELS.length} reels published`;
+  SECTIONS.forEach(s => updateSectionProgress(s.id));
+}
+
+// ===================== TIMELINE =====================
+function updateTimeline() {
+  const grid = document.getElementById('timeline-grid');
+  const published = REELS.filter(r => {
+    const s = getState(r.id);
+    return s.done && s.link;
+  }).sort((a, b) => {
+    const da = getState(a.id).date || '9999';
+    const db = getState(b.id).date || '9999';
+    return da < db ? -1 : 1;
+  });
+
+  if (!published.length) {
+    grid.innerHTML = '<div class="tl-empty">No reels published yet. Complete a reel and add a link to see it appear here.</div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  published.forEach(r => {
+    const s = getState(r.id);
+    const card = document.createElement('div');
+    card.className = 'timeline-card completed';
+    card.innerHTML = `
+      <div class="tl-date">${s.date ? new Date(s.date).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) : 'Date not set'}</div>
+      <div class="tl-title">#${r.id} · ${r.type}</div>
+      <div class="tl-body">${r.text.substring(0,100)}...</div>
+      ${s.link ? `<a class="tl-link" href="${s.link}" target="_blank">▶ Watch Reel</a>` : ''}
+      ${s.memo ? `<div class="tl-body" style="margin-top:.4rem;font-style:italic">${s.memo}</div>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ===================== FILTER & SEARCH =====================
+function filterCards(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.reel-card').forEach(card => {
+    const s = getState(parseInt(card.dataset.id));
+    let show = true;
+    if (type === 'todo') show = !s.done;
+    else if (type === 'done') show = s.done;
+    else if (type === 'priority') show = s.color === 'priority';
+    else if (type === 'in-progress') show = s.color === 'in-progress';
+    else if (type === 'scheduled') show = s.color === 'scheduled';
+    card.classList.toggle('hidden', !show);
+  });
+}
+
+function searchCards(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.reel-card').forEach(card => {
+    const text = card.dataset.text || '';
+    const num = card.dataset.id;
+    card.classList.toggle('hidden', q.length > 0 && !text.includes(q) && !num.includes(q));
+  });
+}
+
+// ===================== INIT =====================
+buildSections();
+updateStats();
+updateTimeline();
+</script>
+</body>
+</html>
